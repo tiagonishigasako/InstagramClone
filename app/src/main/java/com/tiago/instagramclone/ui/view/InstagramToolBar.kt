@@ -15,24 +15,29 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.tiago.instagramclone.R
+import com.tiago.instagramclone.ui.theme.spacingLarge
+import com.tiago.instagramclone.ui.theme.spacingMedium
 
 
 @Composable
 fun InstagramToolBar() {
+    
+    val instagramLabel = stringResource(id = R.string.instagram)
 
     Box(modifier = Modifier.background(MaterialTheme.colorScheme.background)) {
         Row(
             modifier = Modifier
-                .padding(horizontal = 16.dp)
+                .padding(horizontal = spacingLarge)
                 .height(56.dp)
         ) {
 
             Text(
-                text = "Instagram",
+                text = instagramLabel,
                 modifier = Modifier.weight(1f),
                 style = MaterialTheme.typography.headlineLarge
             )
@@ -41,18 +46,18 @@ fun InstagramToolBar() {
                 painter = painterResource(id = R.drawable.ic_notification),
                 modifier = Modifier
                     .size(34.dp)
-                    .padding(end = 8.dp)
+                    .padding(end = spacingMedium)
                     .align(alignment = CenterVertically),
-                contentDescription = "Icone de notificações da barra de ferramentas."
+                contentDescription = stringResource(R.string.conten_description_notification_icon)
             )
 
             Image(
                 painter = painterResource(id = R.drawable.ic_message),
                 modifier = Modifier
                     .size(32.dp)
-                    .padding(start = 8.dp)
+                    .padding(start = spacingMedium)
                     .align(alignment = CenterVertically),
-                contentDescription = "Icone de messagens diretas (DM) da barra de ferramentas. "
+                contentDescription = stringResource(R.string.conten_description_message_icon)
             )
 
         }
