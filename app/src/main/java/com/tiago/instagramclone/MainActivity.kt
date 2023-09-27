@@ -11,12 +11,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.tiago.instagramclone.ui.theme.InstagramCloneTheme
+import com.tiago.instagramclone.ui.view.HomeScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             InstagramCloneTheme {
+                HomeScreen()
 
             }
         }
