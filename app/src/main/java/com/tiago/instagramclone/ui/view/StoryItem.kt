@@ -1,21 +1,39 @@
 package com.tiago.instagramclone.ui.view
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
-import com.bumptech.glide.Glide
+import androidx.compose.ui.unit.dp
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
-import com.tiago.instagramclone.data.Story
+import com.tiago.instagramclone.R
+import com.tiago.instagramclone.data.model.Story
+import com.tiago.instagramclone.data.repository.stories
+import com.tiago.instagramclone.ui.theme.StoryCircleColor
 import com.tiago.instagramclone.ui.theme.spacingSmall
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun StoryItem(story: Story) {
+
+    val avatarContentDesc =
+        stringResource(id = R.string.content_description_story, story.userNickname)
+
     Column(
         modifier = Modifier
             .padding(spacingSmall)
@@ -23,14 +41,29 @@ fun StoryItem(story: Story) {
     ) {
         GlideImage(
             model = story.userAvatar,
-            contentDescription = ""
+            contentDescription = avatarContentDesc,
+            modifier = Modifier
+                .size(64.dp)
+                .align(Alignment.CenterHorizontally)
+                .fillMaxSize()
+                .clip(CircleShape)
+                .border(2.dp, StoryCircleColor, CircleShape),
+            contentScale = ContentScale.Crop
         )
 
+        Text(
+            text = story.userNickname,
+            modifier = Modifier.size(width = 72.dp, height = 24.dp),
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+            textAlign = TextAlign.Center
+
+        )
     }
 }
 
 @Preview(showBackground = true)
 @Composable
 fun StoryItenPreview() {
-    StoryItem(story = Story(userNickname = "", userAvatar = ""))
+    StoryItem(story =  stories[0])
 }

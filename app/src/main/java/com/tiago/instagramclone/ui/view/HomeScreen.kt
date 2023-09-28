@@ -3,11 +3,20 @@ package com.tiago.instagramclone.ui.view
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
-import com.tiago.instagramclone.data.Story
+import androidx.compose.ui.unit.dp
+import com.tiago.instagramclone.data.model.Story
+import com.tiago.instagramclone.data.repository.stories
+import com.tiago.instagramclone.ui.theme.DividerColor
+import com.tiago.instagramclone.ui.theme.spacingMedium
 
 
 @Composable
@@ -22,13 +31,20 @@ fun HomeScreen() {
 
         InstagramToolBar()
 
-        StoryItem(
-            story = Story(
-                userNickname = "Tiago",
-                userAvatar = "https://i.pinimg.com/474x/8d/da/39/8dda39d89cea777270772bb62782035c.jpg"
-            )
-        )
+        StoryList(stories = stories)
 
+        Divider(color = DividerColor, thickness = 0.2.dp)
+
+    }
+
+}
+
+@Composable
+fun StoryList(stories: List<Story>) {
+    LazyRow(modifier = Modifier.padding(top = spacingMedium)) {
+        itemsIndexed(stories) { _, item ->
+            StoryItem(story = item)
+        }
     }
 
 }

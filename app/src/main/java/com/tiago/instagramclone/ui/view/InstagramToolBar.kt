@@ -4,7 +4,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -18,7 +17,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.tiago.instagramclone.R
 import com.tiago.instagramclone.ui.theme.spacingLarge
 import com.tiago.instagramclone.ui.theme.spacingMedium
@@ -33,7 +31,8 @@ fun InstagramToolBar() {
         Row(
             modifier = Modifier
                 .padding(horizontal = spacingLarge)
-                .height(56.dp)
+                .height(56.dp),
+            verticalAlignment = Alignment.CenterVertically
         ) {
 
             Text(
@@ -46,18 +45,16 @@ fun InstagramToolBar() {
                 painter = painterResource(id = R.drawable.ic_notification),
                 modifier = Modifier
                     .size(34.dp)
-                    .padding(end = spacingMedium)
-                    .align(alignment = CenterVertically),
-                contentDescription = stringResource(R.string.conten_description_notification_icon)
+                    .padding(end = spacingMedium),
+                contentDescription = stringResource(R.string.content_description_notification_icon)
             )
 
             Image(
                 painter = painterResource(id = R.drawable.ic_message),
                 modifier = Modifier
                     .size(32.dp)
-                    .padding(start = spacingMedium)
-                    .align(alignment = CenterVertically),
-                contentDescription = stringResource(R.string.conten_description_message_icon)
+                    .padding(start = spacingMedium),
+                contentDescription = stringResource(R.string.content_description_message_icon)
             )
 
         }

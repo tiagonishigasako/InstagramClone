@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">InstagramClone</string>
     <string name="instagram">Instagram</string>
-    <string name="conten_description_notification_icon">Icone de notificações da barra de ferramentas.</string>
-    <string name="conten_description_message_icon">"Icone de messagens diretas (DM) da barra de ferramentas. "</string>
+    <string name="content_description_notification_icon">Icone de notificações da barra de ferramentas.</string>
+    <string name="content_description_message_icon">"Icone de messagens diretas (DM) da barra de ferramentas. "</string>
+    <string name="content_description_story" formatted="true">"Storie de %s não visualizado."</string>
 </resources>
