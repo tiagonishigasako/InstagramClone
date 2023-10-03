@@ -18,8 +18,6 @@ fun typography(onBackground: Color): Typography {
             fontFamily = FontFamily.Default,
             fontWeight = FontWeight.Normal,
             fontSize = fontSmall,
-            lineHeight = 24.sp,
-            letterSpacing = 0.5.sp,
             color = onBackground
         ),
         headlineLarge = TextStyle(

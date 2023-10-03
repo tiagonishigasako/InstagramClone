@@ -1,26 +1,209 @@
 package com.tiago.instagramclone.ui.view
 
+import androidx.annotation.DrawableRes
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
+import com.bumptech.glide.integration.compose.GlideImage
+import com.tiago.instagramclone.R
 import com.tiago.instagramclone.data.model.Feed
+import com.tiago.instagramclone.ui.theme.Gray
+import com.tiago.instagramclone.ui.theme.spacingLarge
+import com.tiago.instagramclone.ui.theme.spacingMedium
+import com.tiago.instagramclone.ui.theme.spacingSmall
 
 
+@OptIn(ExperimentalGlideComposeApi::class)
+@Composable
+fun FeedItem(feed: Feed) {
+
+    val likeIcon = R.drawable.ic_notification
+    val messageIcon = R.drawable.ic_message2
+    val commentIcon = R.drawable.ic_comment
+    val bookmarkIcon = R.drawable.ic_bookmark
+
+
+    val userAvatarContentDesc = stringResource(R.string.content_description_feed_avatar)
+    val feedImageContentDesc = stringResource(R.string.content_description_feed_image)
+    val likeContentDesc = stringResource(R.string.button_like_content_descripition)
+    val messagemContentDesc = stringResource(R.string.button_menssagem_content_descripition)
+    val commentContentDesc = stringResource(R.string.button_comment_content_descripition)
+    val bookmarkContentDesc = stringResource(R.string.button_bookmark_content_descripition)
+
+
+
+
+    Column(modifier = Modifier.background(MaterialTheme.colorScheme.background)) {
+        Row(
+            modifier = Modifier
+                .padding(horizontal = spacingSmall)
+                .padding(top = spacingLarge)
+        ) {
+
+            GlideImage(
+                model = feed.userAvatar,
+                contentDescription = userAvatarContentDesc,
+                modifier = Modifier
+                    .size(36.dp)
+                    .fillMaxSize()
+                    .clip(CircleShape),
+                contentScale = ContentScale.Crop
+            )
+
+            Column {
+                Text(
+                    text = feed.userNickname,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = spacingMedium),
+                    fontWeight = FontWeight.Bold,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                )
+
+                Text(
+                    text = feed.localName,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = spacingMedium),
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    textAlign = TextAlign.Start
+                )
+            }
+
+
+        }
+
+        GlideImage(
+            model = feed.imageUrl,
+            contentDescription = feedImageContentDesc,
+            modifier = Modifier
+                .padding(spacingLarge)
+                .height(256.dp)
+                .fillMaxWidth(),
+            contentScale = ContentScale.Crop
+        )
+
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(40.dp)
+                .padding(start = spacingMedium, top = spacingLarge)
+        ) {
+
+            FeedIcon(icon = likeIcon, contentDescription = likeContentDesc)
+
+            FeedIcon(icon = commentIcon, contentDescription = commentContentDesc)
+
+            FeedIcon(icon = messageIcon, contentDescription = messagemContentDesc)
+
+
+            Image(
+                painter = painterResource(id = bookmarkIcon),
+                contentDescription = bookmarkContentDesc,
+                modifier = Modifier
+                    .size(40.dp)
+                    .padding(end = spacingLarge)
+                    .weight(1f)
+                    .wrapContentWidth(align = Alignment.End)
+            )
+
+
+        }
+        Row(
+            modifier = Modifier
+                .padding(horizontal = spacingSmall)
+                .padding(top = spacingLarge)
+        ) {
+
+            val descripition = buildAnnotatedString {
+                withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
+                    append(feed.userNickname)
+                }
+                append(" ")
+                append(feed.description)
+            }
+
+            Text(
+                text = descripition,
+                modifier = Modifier
+                    .padding(horizontal = spacingMedium),
+                overflow = TextOverflow.Ellipsis,
+                textAlign = TextAlign.Start,
+                maxLines = 2
+            )
+
+        }
+
+        Text(
+            text = feed.postedAgo,
+            modifier = Modifier
+                .padding(start = 12.dp)
+                .padding(top = spacingSmall),
+            maxLines = 2,
+            color = Gray,
+            overflow = TextOverflow.Ellipsis,
+            textAlign = TextAlign.Start
+
+        )
+
+
+    }
+
+}
 
 @Composable
-fun FeedItem(feed:Feed) {
-
-
+fun FeedIcon(
+    @DrawableRes icon: Int,
+    contentDescription: String
+) {
+    Image(
+        painter = painterResource(id = icon),
+        contentDescription = contentDescription,
+        modifier = Modifier
+            .size(40.dp)
+            .padding(end = spacingLarge)
+    )
 }
 
 @Preview(showBackground = true)
 @Composable
-fun FeedItemPreview(){
-    FeedItem(feed = Feed(
-        userNickname = "tiagoNishigasako",
-        localName = "Brasil",
-        userAvatar = "",
-        imageUrl = "",
-        description = "",
-        postedAgo = "Há 2 dias"
-    ))
+fun FeedItemPreview() {
+    FeedItem(
+        feed = Feed(
+            userNickname = "tiagoNishigasako",
+            localName = "Brasil",
+            userAvatar = "",
+            imageUrl = "",
+            description = "",
+            postedAgo = "Há 2 dias"
+        )
+    )
 }
