@@ -1,8 +1,10 @@
 package com.tiago.instagramclone.ui.view
 
+
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,9 +17,15 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -33,7 +41,9 @@ import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.tiago.instagramclone.R
 import com.tiago.instagramclone.data.model.Feed
+import com.tiago.instagramclone.data.repository.feedList
 import com.tiago.instagramclone.ui.theme.Gray
+import com.tiago.instagramclone.ui.theme.LikedColor
 import com.tiago.instagramclone.ui.theme.spacingLarge
 import com.tiago.instagramclone.ui.theme.spacingMedium
 import com.tiago.instagramclone.ui.theme.spacingSmall
@@ -44,6 +54,7 @@ import com.tiago.instagramclone.ui.theme.spacingSmall
 fun FeedItem(feed: Feed) {
 
     val likeIcon = R.drawable.ic_notification
+    val likedIcon = R.drawable.ic_liked
     val messageIcon = R.drawable.ic_message2
     val commentIcon = R.drawable.ic_comment
     val bookmarkIcon = R.drawable.ic_bookmark
@@ -55,6 +66,13 @@ fun FeedItem(feed: Feed) {
     val messagemContentDesc = stringResource(R.string.button_menssagem_content_descripition)
     val commentContentDesc = stringResource(R.string.button_comment_content_descripition)
     val bookmarkContentDesc = stringResource(R.string.button_bookmark_content_descripition)
+
+    var isLiked by rememberSaveable {
+        mutableStateOf(false)
+    }
+
+    val iconsColor = MaterialTheme.colorScheme.onBackground
+    val likedColor = if (isLiked) LikedColor else iconsColor
 
 
 
@@ -118,11 +136,29 @@ fun FeedItem(feed: Feed) {
                 .padding(start = spacingMedium, top = spacingLarge)
         ) {
 
-            FeedIcon(icon = likeIcon, contentDescription = likeContentDesc)
+            FeedIcon(
+                icon = if (isLiked) likedIcon else likeIcon,
+                contentDescription = likeContentDesc,
+                color = likedColor
+            ) {
+                isLiked = !isLiked
+            }
 
-            FeedIcon(icon = commentIcon, contentDescription = commentContentDesc)
+            FeedIcon(
+                icon = commentIcon,
+                contentDescription = commentContentDesc,
+                color = iconsColor
+            ) {
 
-            FeedIcon(icon = messageIcon, contentDescription = messagemContentDesc)
+            }
+
+            FeedIcon(
+                icon = messageIcon,
+                contentDescription = messagemContentDesc,
+                color = iconsColor
+            ) {
+
+            }
 
 
             Image(
@@ -132,7 +168,8 @@ fun FeedItem(feed: Feed) {
                     .size(40.dp)
                     .padding(end = spacingLarge)
                     .weight(1f)
-                    .wrapContentWidth(align = Alignment.End)
+                    .wrapContentWidth(align = Alignment.End),
+                colorFilter = ColorFilter.tint(iconsColor)
             )
 
 
@@ -182,7 +219,9 @@ fun FeedItem(feed: Feed) {
 @Composable
 fun FeedIcon(
     @DrawableRes icon: Int,
-    contentDescription: String
+    contentDescription: String,
+    color: Color,
+    onclick: () -> Unit
 ) {
     Image(
         painter = painterResource(id = icon),
@@ -190,6 +229,8 @@ fun FeedIcon(
         modifier = Modifier
             .size(40.dp)
             .padding(end = spacingLarge)
+            .clickable { onclick() },
+        colorFilter = ColorFilter.tint(color)
     )
 }
 
@@ -197,13 +238,6 @@ fun FeedIcon(
 @Composable
 fun FeedItemPreview() {
     FeedItem(
-        feed = Feed(
-            userNickname = "tiagoNishigasako",
-            localName = "Brasil",
-            userAvatar = "",
-            imageUrl = "",
-            description = "",
-            postedAgo = "Há 2 dias"
-        )
+        feed = feedList[0]
     )
 }

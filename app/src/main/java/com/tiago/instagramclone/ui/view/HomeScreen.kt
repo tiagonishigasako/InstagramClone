@@ -41,7 +41,7 @@ fun HomeScreen() {
         }
 
         item {
-            Divider(color = DividerColor, thickness = 0.2.dp)
+            Divider(color = MaterialTheme.colorScheme.onSurface, thickness = 0.2.dp)
         }
 
         feedList(feedList = feedList)

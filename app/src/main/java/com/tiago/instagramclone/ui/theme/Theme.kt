@@ -21,7 +21,8 @@ private val DarkColorScheme = darkColorScheme(
     secondary = PurpleGrey80,
     tertiary = Pink80,
     background = Color.Black,
-    onBackground = Color.White
+    onBackground = Color.White,
+    onSurface = DarkDividerColor
 )
 
 private val LightColorScheme = lightColorScheme(
@@ -29,7 +30,8 @@ private val LightColorScheme = lightColorScheme(
     secondary = PurpleGrey40,
     tertiary = Pink40,
     background = Color.White,
-    onBackground = Color.Black
+    onBackground = Color.Black,
+    onSurface = DividerColor
 
     /* Other default colors to override
     background = Color(0xFFFFFBFE),
@@ -50,11 +52,6 @@ fun InstagramCloneTheme(
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {
-        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
-            val context = LocalContext.current
-            if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
-        }
-
         darkTheme -> DarkColorScheme
         else -> LightColorScheme
     }

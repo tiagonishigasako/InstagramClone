@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -26,6 +27,8 @@ import com.tiago.instagramclone.ui.theme.spacingMedium
 fun InstagramToolBar() {
     
     val instagramLabel = stringResource(id = R.string.instagram)
+
+    val iconColor = MaterialTheme.colorScheme.onBackground
 
     Box(modifier = Modifier.background(MaterialTheme.colorScheme.background)) {
         Row(
@@ -46,7 +49,8 @@ fun InstagramToolBar() {
                 modifier = Modifier
                     .size(34.dp)
                     .padding(end = spacingMedium),
-                contentDescription = stringResource(R.string.content_description_notification_icon)
+                contentDescription = stringResource(R.string.content_description_notification_icon),
+                colorFilter = ColorFilter.tint(iconColor)
             )
 
             Image(
@@ -54,7 +58,8 @@ fun InstagramToolBar() {
                 modifier = Modifier
                     .size(32.dp)
                     .padding(start = spacingMedium),
-                contentDescription = stringResource(R.string.content_description_message_icon)
+                contentDescription = stringResource(R.string.content_description_message_icon),
+                colorFilter = ColorFilter.tint(iconColor)
             )
 
         }
