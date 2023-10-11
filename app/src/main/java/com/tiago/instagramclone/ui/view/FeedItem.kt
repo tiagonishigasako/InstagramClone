@@ -1,6 +1,7 @@
 package com.tiago.instagramclone.ui.view
 
 
+import android.widget.Toast
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -27,6 +28,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
@@ -62,10 +64,13 @@ fun FeedItem(feed: Feed) {
 
     val userAvatarContentDesc = stringResource(R.string.content_description_feed_avatar)
     val feedImageContentDesc = stringResource(R.string.content_description_feed_image)
-    val likeContentDesc = stringResource(R.string.button_like_content_descripition)
-    val messagemContentDesc = stringResource(R.string.button_menssagem_content_descripition)
-    val commentContentDesc = stringResource(R.string.button_comment_content_descripition)
-    val bookmarkContentDesc = stringResource(R.string.button_bookmark_content_descripition)
+    val likeContentDesc = stringResource(R.string.button_like_content_description)
+    val messagemContentDesc = stringResource(R.string.button_message_content_description)
+    val commentContentDesc = stringResource(R.string.button_comment_content_description)
+    val bookmarkContentDesc = stringResource(R.string.button_bookmark_content_description)
+    val messageToastText = stringResource(id = R.string.button_message_toast_text)
+    val commentToastText = stringResource(id = R.string.button_comment_toast_text)
+    val bookmarkToastText = stringResource(id = R.string.button_bookmark_toast_text)
 
     var isLiked by rememberSaveable {
         mutableStateOf(false)
@@ -73,6 +78,9 @@ fun FeedItem(feed: Feed) {
 
     val iconsColor = MaterialTheme.colorScheme.onBackground
     val likedColor = if (isLiked) LikedColor else iconsColor
+
+    val context = LocalContext.current
+    val duration = Toast.LENGTH_LONG
 
 
 
@@ -145,19 +153,18 @@ fun FeedItem(feed: Feed) {
             }
 
             FeedIcon(
-                icon = commentIcon,
-                contentDescription = commentContentDesc,
-                color = iconsColor
+                icon = commentIcon, contentDescription = commentContentDesc, color = iconsColor
             ) {
+               Toast.makeText(context, commentToastText, duration)
+                   .show()
 
             }
 
             FeedIcon(
-                icon = messageIcon,
-                contentDescription = messagemContentDesc,
-                color = iconsColor
+                icon = messageIcon, contentDescription = messagemContentDesc, color = iconsColor
             ) {
-
+                Toast.makeText(context, messageToastText, duration)
+                    .show()
             }
 
 
@@ -168,7 +175,11 @@ fun FeedItem(feed: Feed) {
                     .size(40.dp)
                     .padding(end = spacingLarge)
                     .weight(1f)
-                    .wrapContentWidth(align = Alignment.End),
+                    .wrapContentWidth(align = Alignment.End)
+                    .clickable {
+                        Toast.makeText(context, bookmarkToastText, duration)
+                            .show()
+                    },
                 colorFilter = ColorFilter.tint(iconsColor)
             )
 
@@ -180,7 +191,7 @@ fun FeedItem(feed: Feed) {
                 .padding(top = spacingLarge)
         ) {
 
-            val descripition = buildAnnotatedString {
+            val description = buildAnnotatedString {
                 withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
                     append(feed.userNickname)
                 }
@@ -189,9 +200,8 @@ fun FeedItem(feed: Feed) {
             }
 
             Text(
-                text = descripition,
-                modifier = Modifier
-                    .padding(horizontal = spacingMedium),
+                text = description,
+                modifier = Modifier.padding(horizontal = spacingMedium),
                 overflow = TextOverflow.Ellipsis,
                 textAlign = TextAlign.Start,
                 maxLines = 2
@@ -218,10 +228,7 @@ fun FeedItem(feed: Feed) {
 
 @Composable
 fun FeedIcon(
-    @DrawableRes icon: Int,
-    contentDescription: String,
-    color: Color,
-    onclick: () -> Unit
+    @DrawableRes icon: Int, contentDescription: String, color: Color, onclick: () -> Unit
 ) {
     Image(
         painter = painterResource(id = icon),

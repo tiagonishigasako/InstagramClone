@@ -64,7 +64,7 @@ fun InstagramCloneTheme(
         }
     }
 
-    val typography = typography(colorScheme.onBackground)
+    val typography = typography(colorScheme)
 
     MaterialTheme(
         colorScheme = colorScheme,
