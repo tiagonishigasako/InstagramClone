@@ -15,18 +15,18 @@ import androidx.compose.ui.tooling.preview.Preview
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PublicationTexUrl(){
-    var urlUserAvatar by remember{ mutableStateOf("") }
-    var userNickName by remember{ mutableStateOf("") }
-    var urlImageUrl by remember{ mutableStateOf("") }
-    var localName by remember{ mutableStateOf("") }
+fun PublicationTexUrl() {
+    var urlUserAvatar by remember { mutableStateOf("") }
+    var userNickName by remember { mutableStateOf("") }
+    var urlImageUrl by remember { mutableStateOf("") }
+    var localName by remember { mutableStateOf("") }
     var descripitionPost by remember { mutableStateOf("") }
     var postedAgo by remember { mutableStateOf("") }
 
 
 
 
-    Column{
+    Column {
         OutlinedTextField(
             value = urlUserAvatar,
             onValueChange =
@@ -64,8 +64,7 @@ fun PublicationTexUrl(){
             { localName = it },
             label = { Text(text = "Local name") },
             modifier = Modifier
-                .fillMaxWidth()
-            ,
+                .fillMaxWidth(),
             maxLines = 1
         )
 
@@ -91,20 +90,11 @@ fun PublicationTexUrl(){
     }
 
 
-
-
-
-
-
-
-
 }
-
-
 
 
 @Preview(showBackground = true)
 @Composable
-fun PublicationTexUrlPreview(){
+fun PublicationTexUrlPreview() {
     PublicationTexUrl()
 }
