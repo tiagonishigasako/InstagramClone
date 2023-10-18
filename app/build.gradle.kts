@@ -69,4 +69,10 @@ dependencies {
 
     //Glide
     implementation ("com.github.bumptech.glide:compose:1.0.0-alpha.3")
+
+    //NavController
+
+
+    implementation ("androidx.navigation:navigation-compose:2.7.4")
+
 }

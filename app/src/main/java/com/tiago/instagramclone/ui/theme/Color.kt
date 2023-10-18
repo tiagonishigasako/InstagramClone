@@ -16,3 +16,4 @@ val DarkDividerColor = Color(0xFF343434)
 val Gray = Color(0xFF808080)
 
 val LikedColor = Color(0xFFF32435)
+val NextColor = Color(0xFF0384F4)

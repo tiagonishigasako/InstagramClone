@@ -17,11 +17,14 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.tiago.instagramclone.R
 import com.tiago.instagramclone.ui.theme.spacingLarge
 
 @Composable
-fun AddToolBar(){
+fun AddToolBar(navController: NavController){
     val iconColor = MaterialTheme.colorScheme.onBackground
     Row(
         modifier = Modifier
@@ -35,11 +38,11 @@ fun AddToolBar(){
         Image(
             painter = painterResource(id = R.drawable.ic_add),
             contentDescription = "",
-            modifier =Modifier
+            modifier = Modifier
                 .size(34.dp)
-                .clickable {
-
-                },
+                .clickable(
+                    onClick = { navController.navigate("newPublication") },
+                ),
             colorFilter = ColorFilter.tint(iconColor)
             )
     }
@@ -48,5 +51,5 @@ fun AddToolBar(){
 @Preview(showBackground = true)
 @Composable
 fun AddToolBarPreview(){
-    AddToolBar()
+    AddToolBar(rememberNavController())
 }

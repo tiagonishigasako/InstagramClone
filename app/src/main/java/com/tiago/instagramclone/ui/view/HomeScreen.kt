@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
@@ -17,6 +18,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.tiago.instagramclone.data.model.Feed
 import com.tiago.instagramclone.data.model.Story
 import com.tiago.instagramclone.data.repository.feedList
@@ -27,12 +30,15 @@ import com.tiago.instagramclone.ui.theme.spacingMedium
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun HomeScreen() {
+fun HomeScreen(
+    navController: NavController
+) {
 
 
     Box(
         modifier = Modifier
             .background(MaterialTheme.colorScheme.background)
+
 
 
     ) {
@@ -45,6 +51,7 @@ fun HomeScreen() {
 
             item {
                 InstagramToolBar()
+                //PublicationToolBar()
             }
 
             item {
@@ -63,7 +70,7 @@ fun HomeScreen() {
 
         Column(modifier = Modifier.align(Alignment.BottomCenter)) {
             Divider(color = MaterialTheme.colorScheme.onSurface, thickness = 0.2.dp)
-            AddToolBar()
+            AddToolBar(navController)
         }
 
 
@@ -89,9 +96,9 @@ fun LazyListScope.feedList(feedList: List<Feed>) {
 }
 
 
-@Preview(showBackground = true)
+@Preview(showBackground = true,)
 @Composable
 
 fun HomeScreenPreview() {
-    HomeScreen()
+    HomeScreen(rememberNavController())
 }
