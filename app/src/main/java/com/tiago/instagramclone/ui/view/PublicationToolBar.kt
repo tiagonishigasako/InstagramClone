@@ -12,9 +12,11 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -22,13 +24,22 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.tiago.instagramclone.R
+import com.tiago.instagramclone.data.repository.PostRepository
 import com.tiago.instagramclone.ui.theme.NextColor
 import com.tiago.instagramclone.ui.theme.spacingLarge
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 @Composable
 fun PublicationToolBar(navController: NavController){
     val newPubliText =  "Nova Publicação"
     val next = "Avançar"
+
+    val scope = rememberCoroutineScope()
+    val contex = LocalContext.current
+    val postRepository = PostRepository()
+
+
 
 
     Box (modifier = Modifier.background(MaterialTheme.colorScheme.background)){
@@ -67,7 +78,16 @@ fun PublicationToolBar(navController: NavController){
             Text(
                 text  = next,
                 style = MaterialTheme.typography.bodyLarge,
-                color = NextColor
+                color = NextColor,
+                modifier = Modifier
+                    .clickable (
+                        onClick = {
+                            scope.launch (Dispatchers.IO){
+
+
+                            }
+                        }
+                    )
 
             )
 

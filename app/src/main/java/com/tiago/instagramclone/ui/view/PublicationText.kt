@@ -2,6 +2,8 @@ package com.tiago.instagramclone.ui.view
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -11,11 +13,14 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import com.tiago.instagramclone.data.repository.PostRepository
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PublicationTexUrl() {
+fun PublicationText() {
     var urlUserAvatar by remember { mutableStateOf("") }
     var userNickName by remember { mutableStateOf("") }
     var urlImageUrl by remember { mutableStateOf("") }
@@ -34,7 +39,9 @@ fun PublicationTexUrl() {
             label = { Text(text = "Url profile image") },
             modifier = Modifier
                 .fillMaxWidth(),
-            maxLines = 1
+            singleLine = true,
+            maxLines = 1,
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Uri)
         )
 
 
@@ -45,7 +52,9 @@ fun PublicationTexUrl() {
             label = { Text(text = "Url publication image") },
             modifier = Modifier
                 .fillMaxWidth(),
-            maxLines = 1
+            singleLine = true,
+            maxLines = 1,
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Uri)
         )
 
         OutlinedTextField(
@@ -55,7 +64,9 @@ fun PublicationTexUrl() {
             label = { Text(text = "User nick name") },
             modifier = Modifier
                 .fillMaxWidth(),
-            maxLines = 1
+            singleLine = true,
+            maxLines = 1,
+
         )
 
         OutlinedTextField(
@@ -65,6 +76,7 @@ fun PublicationTexUrl() {
             label = { Text(text = "Local name") },
             modifier = Modifier
                 .fillMaxWidth(),
+            singleLine = true,
             maxLines = 1
         )
 
@@ -74,8 +86,10 @@ fun PublicationTexUrl() {
             { descripitionPost = it },
             label = { Text(text = "Description post") },
             modifier = Modifier
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .height(100.dp),
             maxLines = 3
+
         )
 
         OutlinedTextField(
@@ -85,16 +99,24 @@ fun PublicationTexUrl() {
             label = { Text(text = "posted ago") },
             modifier = Modifier
                 .fillMaxWidth(),
-            maxLines = 1
+            singleLine = true,
+            maxLines = 1,
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal)
         )
     }
+
+
+
 
 
 }
 
 
+
+
+
 @Preview(showBackground = true)
 @Composable
 fun PublicationTexUrlPreview() {
-    PublicationTexUrl()
+    PublicationText()
 }
