@@ -1,5 +1,6 @@
 package com.tiago.instagramclone.ui.view
 
+import android.net.Uri
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -16,7 +17,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.tiago.instagramclone.data.repository.PostRepository
+import com.tiago.instagramclone.data.model.ago
+import com.tiago.instagramclone.data.model.avatar
+import com.tiago.instagramclone.data.model.description
+import com.tiago.instagramclone.data.model.image
+import com.tiago.instagramclone.data.model.local
+import com.tiago.instagramclone.data.model.nickName
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -27,6 +33,9 @@ fun PublicationText() {
     var localName by remember { mutableStateOf("") }
     var descripitionPost by remember { mutableStateOf("") }
     var postedAgo by remember { mutableStateOf("") }
+
+
+
 
 
 
@@ -103,13 +112,27 @@ fun PublicationText() {
             maxLines = 1,
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal)
         )
+        nickName =  userNickName
+        local =  localName
+        avatar = urlUserAvatar
+        image =  urlImageUrl
+        description =  descripitionPost
+        ago = postedAgo
     }
 
 
 
 
 
+
+
+
+
+
+
+
 }
+
 
 
 

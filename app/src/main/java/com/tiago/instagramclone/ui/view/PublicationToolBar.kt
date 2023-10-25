@@ -1,9 +1,9 @@
 package com.tiago.instagramclone.ui.view
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.height
@@ -24,6 +24,12 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.tiago.instagramclone.R
+import com.tiago.instagramclone.data.model.ago
+import com.tiago.instagramclone.data.model.avatar
+import com.tiago.instagramclone.data.model.description
+import com.tiago.instagramclone.data.model.image
+import com.tiago.instagramclone.data.model.local
+import com.tiago.instagramclone.data.model.nickName
 import com.tiago.instagramclone.data.repository.PostRepository
 import com.tiago.instagramclone.ui.theme.NextColor
 import com.tiago.instagramclone.ui.theme.spacingLarge
@@ -38,6 +44,7 @@ fun PublicationToolBar(navController: NavController){
     val scope = rememberCoroutineScope()
     val contex = LocalContext.current
     val postRepository = PostRepository()
+
 
 
 
@@ -82,7 +89,29 @@ fun PublicationToolBar(navController: NavController){
                 modifier = Modifier
                     .clickable (
                         onClick = {
+                            var mensagem = true
                             scope.launch (Dispatchers.IO){
+                                if(nickName.isEmpty() && avatar.isEmpty() && image.isEmpty()){
+                                    mensagem = false
+                                } else {
+                                    postRepository.salvarPost(
+                                        userNickname = com.tiago.instagramclone.data.model.nickName,
+                                        localName = com.tiago.instagramclone.data.model.local,
+                                        userAvatar = com.tiago.instagramclone.data.model.avatar,
+                                        imageUrl = com.tiago.instagramclone.data.model.image,
+                                        description = com.tiago.instagramclone.data.model.description,
+                                        postedAgo = com.tiago.instagramclone.data.model.ago
+                                    )
+                                    mensagem = true
+                                }
+                            }
+                            scope.launch(Dispatchers.Main){
+                                if(mensagem){
+                                    Toast.makeText(contex, "Post salvo com sucesso.", Toast.LENGTH_SHORT).show()
+                                    navController.popBackStack()
+                                }else {
+                                    Toast.makeText(contex, "Favor adicionar (Profile image, publication image e user nick name).", Toast.LENGTH_LONG).show()
+                                }
 
 
                             }
@@ -97,6 +126,7 @@ fun PublicationToolBar(navController: NavController){
 
 
 }
+
 
 @Preview(showBackground = true)
 @Composable

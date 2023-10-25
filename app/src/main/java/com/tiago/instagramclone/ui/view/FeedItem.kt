@@ -1,6 +1,7 @@
 package com.tiago.instagramclone.ui.view
 
 
+import android.content.Context
 import android.widget.Toast
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
@@ -37,13 +38,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.withStyle
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.tiago.instagramclone.R
 import com.tiago.instagramclone.data.model.Feed
-import com.tiago.instagramclone.data.repository.feedList
 import com.tiago.instagramclone.ui.theme.Gray
 import com.tiago.instagramclone.ui.theme.LikedColor
 import com.tiago.instagramclone.ui.theme.spacingLarge
@@ -53,7 +52,17 @@ import com.tiago.instagramclone.ui.theme.spacingSmall
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
-fun FeedItem(feed: Feed) {
+fun FeedItem(position: Int,
+             listaPosts: MutableList<Feed>,
+             context: Context) {
+
+    val nicknameFeed = listaPosts[position].userNickname
+    val avatarFeed = listaPosts[position].userAvatar
+    val localFeed = listaPosts[position].localName
+    val imageFeed = listaPosts[position].imageUrl
+    val descriptionListFeed = listaPosts[position].description
+    val agoFeed = listaPosts[position].postedAgo
+
 
     val likeIcon = R.drawable.ic_notification
     val likedIcon = R.drawable.ic_liked
@@ -93,7 +102,7 @@ fun FeedItem(feed: Feed) {
         ) {
 
             GlideImage(
-                model = feed.userAvatar,
+                model = avatarFeed,
                 contentDescription = userAvatarContentDesc,
                 modifier = Modifier
                     .size(36.dp)
@@ -104,7 +113,7 @@ fun FeedItem(feed: Feed) {
 
             Column {
                 Text(
-                    text = feed.userNickname,
+                    text = nicknameFeed,
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(start = spacingMedium),
@@ -114,7 +123,7 @@ fun FeedItem(feed: Feed) {
                 )
 
                 Text(
-                    text = feed.localName,
+                    text = localFeed,
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(start = spacingMedium),
@@ -128,7 +137,7 @@ fun FeedItem(feed: Feed) {
         }
 
         GlideImage(
-            model = feed.imageUrl,
+            model = imageFeed,
             contentDescription = feedImageContentDesc,
             modifier = Modifier
                 .padding(spacingLarge)
@@ -193,10 +202,10 @@ fun FeedItem(feed: Feed) {
 
             val description = buildAnnotatedString {
                 withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
-                    append(feed.userNickname)
+                    append(nicknameFeed)
                 }
                 append(" ")
-                append(feed.description)
+                append(descriptionListFeed)
             }
 
             Text(
@@ -210,7 +219,7 @@ fun FeedItem(feed: Feed) {
         }
 
         Text(
-            text = feed.postedAgo,
+            text = agoFeed,
             modifier = Modifier
                 .padding(start = 12.dp)
                 .padding(top = spacingSmall),
@@ -241,10 +250,10 @@ fun FeedIcon(
     )
 }
 
-@Preview(showBackground = true)
-@Composable
-fun FeedItemPreview() {
-    FeedItem(
-        feed = feedList[0]
-    )
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun FeedItemPreview() {
+//    FeedItem(
+//        feed = feedList[0]
+//    )
+//}

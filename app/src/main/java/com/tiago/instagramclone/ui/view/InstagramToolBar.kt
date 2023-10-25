@@ -3,7 +3,10 @@ package com.tiago.instagramclone.ui.view
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -21,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import com.tiago.instagramclone.R
 import com.tiago.instagramclone.ui.theme.spacingLarge
 import com.tiago.instagramclone.ui.theme.spacingMedium
+import com.tiago.instagramclone.ui.theme.spacingSmall
 
 
 @Composable
@@ -42,7 +46,7 @@ fun InstagramToolBar() {
 
             Text(
                 text = instagramLabel,
-                modifier = Modifier.weight(1f),
+                modifier = Modifier.weight(1f).padding(top = spacingSmall),
                 style = MaterialTheme.typography.headlineLarge
             )
 

@@ -54,8 +54,7 @@ val feedList = listOf(
         localName = "São Paulo",
         userAvatar = "https://i.pinimg.com/474x/8d/da/39/8dda39d89cea777270772bb62782035c.jpg",
         imageUrl = "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiLWoapNhR-gNX_kjzE3lsC_3uT3r4WRdH3dx7R1O_wLGNm0Hk7t7y8s0fG7bLuPAgyMSVp2Sdy1gdq1kSV9rtkOmuTxXK7SqvTGDfLK6MtTcmx6M4YWjXe4c6p2lqNZ1I6MVjU1M23cFYswYcUwD-x76_wCPr0TgHyHqbwiXsogFjfcAHVJPvBaAKbHq5Z/w1200-h630-p-k-no-nu/jujutsu_kaisen_cursed_clash_revelado_bandai_namco.jpg",
-        description = "mama sad jjjdsf hhoksdjflsd mamama sdhuheu  asdkjmas asdjkasd asdl adçlka asldk asd kaçsldk asdlk " +
-                "aslkdaçs alskdas dçlaksd  alkd kasdlk chchha skkand jsjja djjhf  ",
+        description = "mama sad jjjdsf hhoksdjflsd  ",
         postedAgo = "Há 21 horas"
     ),
 

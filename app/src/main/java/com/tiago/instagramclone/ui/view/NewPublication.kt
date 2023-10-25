@@ -11,6 +11,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.google.firebase.ktx.Firebase
+import com.tiago.instagramclone.data.repository.PostRepository
 
 
 @Composable
@@ -33,11 +34,11 @@ fun NewPublication(
             item {
                 PublicationText()
 
-
             }
         }
 
     }
+
 
 
 
