@@ -1,11 +1,16 @@
 package com.tiago.instagramclone.ui.view
 
 import android.annotation.SuppressLint
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
@@ -20,6 +25,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
@@ -31,19 +38,25 @@ import com.tiago.instagramclone.data.model.Story
 import com.tiago.instagramclone.data.repository.PostRepository
 import com.tiago.instagramclone.data.repository.stories
 import com.tiago.instagramclone.ui.theme.spacingMedium
+import eu.bambooapps.material3.pullrefresh.PullRefreshIndicator
+import eu.bambooapps.material3.pullrefresh.pullRefresh
+import eu.bambooapps.material3.pullrefresh.rememberPullRefreshState
+import kotlinx.coroutines.delay
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter", "UnrememberedMutableState")
 @Composable
 fun HomeScreen(
-    navController: NavController
+    navController: NavController,
+    modifier: Modifier = Modifier.background(MaterialTheme.colorScheme.background)
 ) {
 
 
     val context = LocalContext.current
     var updateList = remember { mutableListOf<Feed>() }
     var isCliked by mutableStateOf(false)
+
 
 
 
@@ -61,6 +74,7 @@ fun HomeScreen(
 
     ) {
 
+
         if (updateList.isEmpty()) {
             updateList = funUpdate()
             isCliked = false
@@ -68,23 +82,31 @@ fun HomeScreen(
             updateList = funUpdate()
             isCliked = false
         }
+        val isRefreshing by remember {
+            mutableStateOf(false)
+        }
+        val state =
+            rememberPullRefreshState(refreshing = isRefreshing, onRefresh = { isCliked = true })
 
 
 
 
 
-        Box(modifier = Modifier
-            .pointerInput(Unit) {
-                detectTapGestures(onLongPress = { isCliked = true })
-            }
+        Box(
+            modifier = Modifier
+
+                .fillMaxSize()
         ) {
-            Column(modifier = Modifier.fillMaxSize()) {
 
 
-                LazyColumn {
+
+
+
+            Box(modifier = Modifier) {
+                LazyColumn(modifier = Modifier.pullRefresh(state).background(MaterialTheme.colorScheme.background)) {
+
                     item { InstagramToolBar() }
 
-                    item { }
 
                     item { StoryList(stories = stories) }
 
@@ -96,14 +118,32 @@ fun HomeScreen(
                     }
 
                     itemsIndexed(updateList) { position, _ ->
-                        FeedItem(position = position, listaPosts = updateList, context = context)
+                        FeedItem(
+                            position = position,
+                            listaPosts = updateList,
+                            context = context
+                        )
 
                     }
-                    item { Divider(color = MaterialTheme.colorScheme.onSurface, thickness = 55.dp) }
+                    item {
+                        Divider(
+                            color = MaterialTheme.colorScheme.onSurface,
+                            thickness = 55.dp
+                        )
+                    }
                 }
-            }
-        }
+                PullRefreshIndicator(
+                    refreshing = isRefreshing,
+                    state = state,
+                    modifier = Modifier
+                        .align(Alignment.TopCenter),
+                    scale = false
 
+
+                )
+            }
+
+        }
     }
 }
 
@@ -124,6 +164,7 @@ fun StoryList(stories: List<Story>) {
     }
 
 }
+
 
 
 

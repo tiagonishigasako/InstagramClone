@@ -13,5 +13,6 @@ dependencyResolutionManagement {
     }
 }
 
+
 rootProject.name = "InstagramClone"
 include(":app")
