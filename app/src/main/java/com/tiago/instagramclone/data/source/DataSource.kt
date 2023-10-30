@@ -1,8 +1,6 @@
 package com.tiago.instagramclone.data.source
 
-import android.net.Uri
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ktx.toObject
 import com.tiago.instagramclone.data.model.Feed
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -10,12 +8,12 @@ import kotlinx.coroutines.flow.StateFlow
 
 class DataSource {
     private val db = FirebaseFirestore.getInstance()
-    private val _todosPosts = MutableStateFlow<MutableList<Feed>>(mutableListOf())
-    private val todosPosts: StateFlow<MutableList<Feed>> = _todosPosts
+    private val _todosFeed = MutableStateFlow<MutableList<Feed>>(mutableListOf())
+    private val todosFeed: StateFlow<MutableList<Feed>> = _todosFeed
 
 
 
-    fun salvarPost(
+    fun salvarFeed(
         userNickname: String,
         localName: String,
         userAvatar: String,
@@ -23,7 +21,7 @@ class DataSource {
         description: String,
         postedAgo: String)
     {
-        val postMap = hashMapOf(
+        val feedMap = hashMapOf(
             "userNickname" to userNickname,
             "localName" to localName,
             "userAvatar" to userAvatar,
@@ -34,7 +32,7 @@ class DataSource {
         )
 
 
-        db.collection("posts").document(userNickname).set(postMap).addOnCompleteListener {
+        db.collection("feedList").document(postedAgo).set(feedMap).addOnCompleteListener {
 
         }.addOnFailureListener {
 
@@ -43,19 +41,19 @@ class DataSource {
     }
 
 
-    fun recuperaPosts(): Flow<MutableList<Feed>>{
-        val listaPost: MutableList<Feed> = mutableListOf()
+    fun recuperaFeed(): Flow<MutableList<Feed>>{
+        val listaFeed: MutableList<Feed> = mutableListOf()
 
-        db.collection("posts").get().addOnCompleteListener { querySnapshot ->
+        db.collection("feedList").get().addOnCompleteListener { querySnapshot ->
             if (querySnapshot.isSuccessful){
                 for (documento in querySnapshot.result) {
                     val post = documento.toObject(Feed::class.java)
-                    listaPost.add(post)
+                    listaFeed.add(post)
 
-                    _todosPosts.value = listaPost
+                    _todosFeed.value = listaFeed
                 }
             }
         }
-        return todosPosts
+        return todosFeed
     }
 }

@@ -1,6 +1,7 @@
 package com.tiago.instagramclone.ui.view
 
-import android.net.Uri
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -23,7 +24,10 @@ import com.tiago.instagramclone.data.model.description
 import com.tiago.instagramclone.data.model.image
 import com.tiago.instagramclone.data.model.local
 import com.tiago.instagramclone.data.model.nickName
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
+@RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PublicationText() {
@@ -32,7 +36,7 @@ fun PublicationText() {
     var urlImageUrl by remember { mutableStateOf("") }
     var localName by remember { mutableStateOf("") }
     var descripitionPost by remember { mutableStateOf("") }
-    var postedAgo by remember { mutableStateOf("") }
+
 
 
 
@@ -76,7 +80,7 @@ fun PublicationText() {
             singleLine = true,
             maxLines = 1,
 
-        )
+            )
 
         OutlinedTextField(
             value = localName,
@@ -101,43 +105,24 @@ fun PublicationText() {
 
         )
 
-        OutlinedTextField(
-            value = postedAgo,
-            onValueChange =
-            { postedAgo = it },
-            label = { Text(text = "posted ago") },
-            modifier = Modifier
-                .fillMaxWidth(),
-            singleLine = true,
-            maxLines = 1,
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal)
-        )
-        nickName =  userNickName
-        local =  localName
+        val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss")
+        val current = LocalDateTime.now().format(formatter)
+
+
+
+        nickName = userNickName
+        local = localName
         avatar = urlUserAvatar
-        image =  urlImageUrl
-        description =  descripitionPost
-        ago = postedAgo
+        image = urlImageUrl
+        description = descripitionPost
+        ago = current.toString()
     }
-
-
-
-
-
-
-
-
-
-
 
 
 }
 
 
-
-
-
-
+@RequiresApi(Build.VERSION_CODES.O)
 @Preview(showBackground = true)
 @Composable
 fun PublicationTexUrlPreview() {

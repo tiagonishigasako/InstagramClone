@@ -52,16 +52,17 @@ import com.tiago.instagramclone.ui.theme.spacingSmall
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
-fun FeedItem(position: Int,
-             listaPosts: MutableList<Feed>,
-             context: Context) {
+fun FeedItem(
+    position: Int,
+    feedList: List<Feed>,
+    context: Context) {
 
-    val nicknameFeed = listaPosts[position].userNickname
-    val avatarFeed = listaPosts[position].userAvatar
-    val localFeed = listaPosts[position].localName
-    val imageFeed = listaPosts[position].imageUrl
-    val descriptionListFeed = listaPosts[position].description
-    val agoFeed = listaPosts[position].postedAgo
+    val nicknameFeed = feedList[position].userNickname
+    val avatarFeed = feedList[position].userAvatar
+    val localFeed = feedList[position].localName
+    val imageFeed = feedList[position].imageUrl
+    val descriptionListFeed = feedList[position].description
+    val agoFeed = feedList[position].postedAgo
 
 
     val likeIcon = R.drawable.ic_notification

@@ -1,5 +1,7 @@
 package com.tiago.instagramclone.ui.view
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -10,10 +12,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.google.firebase.ktx.Firebase
-import com.tiago.instagramclone.data.repository.PostRepository
 
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun NewPublication(
     navController: NavController
@@ -45,6 +46,7 @@ fun NewPublication(
 
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Preview(showBackground = true)
 @Composable
 fun NewPublicationPreview(){

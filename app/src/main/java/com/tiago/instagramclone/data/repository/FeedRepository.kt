@@ -1,14 +1,13 @@
 package com.tiago.instagramclone.data.repository
 
-import android.net.Uri
 import com.tiago.instagramclone.data.model.Feed
 import com.tiago.instagramclone.data.source.DataSource
 import kotlinx.coroutines.flow.Flow
 
-class PostRepository {
+class FeedRepository {
 
     private val dataSource = DataSource()
-    fun salvarPost(
+    fun salvarFeed(
         userNickname: String,
         localName: String,
         userAvatar: String,
@@ -16,11 +15,11 @@ class PostRepository {
         description: String,
         postedAgo: String
     ){
-        dataSource.salvarPost(userNickname, localName, userAvatar, imageUrl, description, postedAgo)
+        dataSource.salvarFeed(userNickname, localName, userAvatar, imageUrl, description, postedAgo)
     }
 
-    fun recuperarPost(): Flow<MutableList<Feed>>{
-        return dataSource.recuperaPosts()
+    fun recuperarFeed(): Flow<MutableList<Feed>>{
+        return dataSource.recuperaFeed()
     }
 
 

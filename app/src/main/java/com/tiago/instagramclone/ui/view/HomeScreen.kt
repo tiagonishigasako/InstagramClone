@@ -1,16 +1,9 @@
 package com.tiago.instagramclone.ui.view
 
 import android.annotation.SuppressLint
-import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.detectTapGestures
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
@@ -26,22 +19,19 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.tiago.instagramclone.data.model.Feed
 import com.tiago.instagramclone.data.model.Story
-import com.tiago.instagramclone.data.repository.PostRepository
+import com.tiago.instagramclone.data.repository.FeedRepository
 import com.tiago.instagramclone.data.repository.stories
 import com.tiago.instagramclone.ui.theme.spacingMedium
 import eu.bambooapps.material3.pullrefresh.PullRefreshIndicator
 import eu.bambooapps.material3.pullrefresh.pullRefresh
 import eu.bambooapps.material3.pullrefresh.rememberPullRefreshState
-import kotlinx.coroutines.delay
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -69,7 +59,13 @@ fun HomeScreen(
 
         containerColor = Color.Black,
 
-        bottomBar = { AddToolBar(navController = navController) }
+        bottomBar = {
+            Divider(
+                color = MaterialTheme.colorScheme.onSurface,
+                thickness = 0.2.dp
+            )
+            AddToolBar(navController = navController)
+        }
 
 
     ) {
@@ -94,16 +90,19 @@ fun HomeScreen(
 
         Box(
             modifier = Modifier
+                .background(MaterialTheme.colorScheme.background)
 
                 .fillMaxSize()
         ) {
 
 
-
-
-
             Box(modifier = Modifier) {
-                LazyColumn(modifier = Modifier.pullRefresh(state).background(MaterialTheme.colorScheme.background)) {
+                LazyColumn(
+
+                    modifier = Modifier
+                        .pullRefresh(state)
+                        .background(MaterialTheme.colorScheme.background)
+                ) {
 
                     item { InstagramToolBar() }
 
@@ -118,19 +117,15 @@ fun HomeScreen(
                     }
 
                     itemsIndexed(updateList) { position, _ ->
+
                         FeedItem(
                             position = position,
-                            listaPosts = updateList,
+                            feedList = updateList.reversed(),
                             context = context
                         )
 
                     }
-                    item {
-                        Divider(
-                            color = MaterialTheme.colorScheme.onSurface,
-                            thickness = 55.dp
-                        )
-                    }
+
                 }
                 PullRefreshIndicator(
                     refreshing = isRefreshing,
@@ -150,8 +145,8 @@ fun HomeScreen(
 
 @Composable
 fun funUpdate(): MutableList<Feed> {
-    val postRepository = PostRepository()
-    return postRepository.recuperarPost().collectAsState(mutableListOf()).value
+    val feedRepository = FeedRepository()
+    return feedRepository.recuperarFeed().collectAsState(mutableListOf()).value
 }
 
 

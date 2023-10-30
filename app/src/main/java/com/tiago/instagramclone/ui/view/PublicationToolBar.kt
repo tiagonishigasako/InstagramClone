@@ -24,13 +24,10 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.tiago.instagramclone.R
-import com.tiago.instagramclone.data.model.ago
 import com.tiago.instagramclone.data.model.avatar
-import com.tiago.instagramclone.data.model.description
 import com.tiago.instagramclone.data.model.image
-import com.tiago.instagramclone.data.model.local
 import com.tiago.instagramclone.data.model.nickName
-import com.tiago.instagramclone.data.repository.PostRepository
+import com.tiago.instagramclone.data.repository.FeedRepository
 import com.tiago.instagramclone.ui.theme.NextColor
 import com.tiago.instagramclone.ui.theme.spacingLarge
 import kotlinx.coroutines.Dispatchers
@@ -43,7 +40,7 @@ fun PublicationToolBar(navController: NavController){
 
     val scope = rememberCoroutineScope()
     val contex = LocalContext.current
-    val postRepository = PostRepository()
+    val feedRepository = FeedRepository()
 
 
 
@@ -94,7 +91,7 @@ fun PublicationToolBar(navController: NavController){
                                 if(nickName.isEmpty() && avatar.isEmpty() && image.isEmpty()){
                                     mensagem = false
                                 } else {
-                                    postRepository.salvarPost(
+                                    feedRepository.salvarFeed(
                                         userNickname = com.tiago.instagramclone.data.model.nickName,
                                         localName = com.tiago.instagramclone.data.model.local,
                                         userAvatar = com.tiago.instagramclone.data.model.avatar,
