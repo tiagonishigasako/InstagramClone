@@ -12,15 +12,14 @@ class DataSource {
     private val todosFeed: StateFlow<MutableList<Feed>> = _todosFeed
 
 
-
     fun salvarFeed(
         userNickname: String,
         localName: String,
         userAvatar: String,
         imageUrl: String,
         description: String,
-        postedAgo: String)
-    {
+        postedAgo: String
+    ) {
         val feedMap = hashMapOf(
             "userNickname" to userNickname,
             "localName" to localName,
@@ -41,11 +40,11 @@ class DataSource {
     }
 
 
-    fun recuperaFeed(): Flow<MutableList<Feed>>{
+    fun recuperaFeed(): Flow<MutableList<Feed>> {
         val listaFeed: MutableList<Feed> = mutableListOf()
 
         db.collection("feedList").get().addOnCompleteListener { querySnapshot ->
-            if (querySnapshot.isSuccessful){
+            if (querySnapshot.isSuccessful) {
                 for (documento in querySnapshot.result) {
                     val post = documento.toObject(Feed::class.java)
                     listaFeed.add(post)
