@@ -1,4 +1,4 @@
-package com.tiago.instagramclone.ui.view
+package com.tiago.instagramclone.ui.view.itens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border

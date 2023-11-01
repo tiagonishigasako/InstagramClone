@@ -1,4 +1,4 @@
-package com.tiago.instagramclone.ui.view
+package com.tiago.instagramclone.ui.view.itens
 
 import android.os.Build
 import androidx.annotation.RequiresApi
@@ -30,9 +30,9 @@ import java.time.format.DateTimeFormatter
 @RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PublicationText() {
+fun PublicationItens() {
     var urlUserAvatar by remember { mutableStateOf("") }
-    var userNickName by remember { mutableStateOf("") }
+    var userNickname by remember { mutableStateOf("") }
     var urlImageUrl by remember { mutableStateOf("") }
     var localName by remember { mutableStateOf("") }
     var descripitionPost by remember { mutableStateOf("") }
@@ -71,9 +71,9 @@ fun PublicationText() {
         )
 
         OutlinedTextField(
-            value = userNickName,
+            value = userNickname,
             onValueChange =
-            { userNickName = it },
+            { userNickname = it },
             label = { Text(text = "User nick name") },
             modifier = Modifier
                 .fillMaxWidth(),
@@ -105,12 +105,12 @@ fun PublicationText() {
 
         )
 
-        val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss")
+        val formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy HH:mm:ss")
         val current = LocalDateTime.now().format(formatter)
 
 
 
-        nickName = userNickName
+        nickName = userNickname
         local = localName
         avatar = urlUserAvatar
         image = urlImageUrl
@@ -126,5 +126,5 @@ fun PublicationText() {
 @Preview(showBackground = true)
 @Composable
 fun PublicationTexUrlPreview() {
-    PublicationText()
+    PublicationItens()
 }

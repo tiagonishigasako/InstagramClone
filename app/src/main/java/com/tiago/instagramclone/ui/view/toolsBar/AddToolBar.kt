@@ -1,4 +1,4 @@
-package com.tiago.instagramclone.ui.view
+package com.tiago.instagramclone.ui.view.toolsBar
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -21,7 +21,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
 import com.tiago.instagramclone.R
 import com.tiago.instagramclone.ui.theme.spacingLarge
 
@@ -50,7 +49,7 @@ fun AddToolBar(navController: NavController) {
                 modifier = Modifier
                     .size(34.dp)
                     .clickable(
-                        onClick = { navController.navigate("newPublication") },
+                        onClick = { navController.navigate("feedPublication") },
                     ),
                 colorFilter = ColorFilter.tint(iconColor)
             )

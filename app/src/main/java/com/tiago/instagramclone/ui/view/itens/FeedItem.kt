@@ -1,4 +1,4 @@
-package com.tiago.instagramclone.ui.view
+package com.tiago.instagramclone.ui.view.itens
 
 
 import android.content.Context

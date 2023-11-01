@@ -1,4 +1,4 @@
-package com.tiago.instagramclone.ui.view
+package com.tiago.instagramclone.ui.view.toolsBar
 
 import android.widget.Toast
 import androidx.compose.foundation.Image
@@ -34,8 +34,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 @Composable
-fun PublicationToolBar(navController: NavController){
-    val newPubliText =  "Nova Publicação"
+fun PublicationToolBar(navController: NavController) {
+    val newPubliText = "Nova Publicação"
     val next = "Avançar"
 
     val scope = rememberCoroutineScope()
@@ -46,14 +46,14 @@ fun PublicationToolBar(navController: NavController){
 
 
 
-    Box (modifier = Modifier.background(MaterialTheme.colorScheme.background)){
+    Box(modifier = Modifier.background(MaterialTheme.colorScheme.background)) {
         Row(
             modifier = Modifier
                 .padding(horizontal = spacingLarge)
                 .height(56.dp),
             verticalAlignment = Alignment.CenterVertically,
 
-        ){
+            ) {
 
             Image(
                 painterResource(id = R.drawable.ic_x),
@@ -66,7 +66,7 @@ fun PublicationToolBar(navController: NavController){
                 contentDescription = "",
                 colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onBackground),
 
-            )
+                )
 
 
 
@@ -80,15 +80,15 @@ fun PublicationToolBar(navController: NavController){
             )
 
             Text(
-                text  = next,
+                text = next,
                 style = MaterialTheme.typography.bodyLarge,
                 color = NextColor,
                 modifier = Modifier
-                    .clickable (
+                    .clickable(
                         onClick = {
                             var mensagem = true
-                            scope.launch (Dispatchers.IO){
-                                if(nickName.isEmpty() && avatar.isEmpty() && image.isEmpty()){
+                            scope.launch(Dispatchers.IO) {
+                                if (nickName.isEmpty() && avatar.isEmpty() && image.isEmpty()) {
                                     mensagem = false
                                 } else {
                                     feedRepository.salvarFeed(
@@ -102,18 +102,26 @@ fun PublicationToolBar(navController: NavController){
                                     mensagem = true
                                 }
                             }
-                            scope.launch(Dispatchers.Main){
-                                if(mensagem){
-                                    Toast.makeText(contex, "Post salvo com sucesso.", Toast.LENGTH_SHORT).show()
+                            scope.launch(Dispatchers.Main) {
+                                if (mensagem) {
+                                    Toast.makeText(
+                                        contex,
+                                        "Post salvo com sucesso.",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
                                     navController.popBackStack()
-                                }else {
-                                    Toast.makeText(contex, "Favor adicionar (Profile image, publication image e user nick name).", Toast.LENGTH_LONG).show()
-                                }
-
-
+                                } else {
+                                    Toast.makeText(
+                                        contex,
+                                        "Favor adicionar (Profile image, publication image e user nick name).",
+                                        Toast.LENGTH_LONG
+                                    ).show()
                             }
+
+
                         }
-                    )
+                    }
+                )
 
             )
 
@@ -127,6 +135,6 @@ fun PublicationToolBar(navController: NavController){
 
 @Preview(showBackground = true)
 @Composable
-fun PublicationToolBarPreview(){
+fun PublicationToolBarPreview() {
     PublicationToolBar(rememberNavController())
 }
