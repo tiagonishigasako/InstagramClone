@@ -105,7 +105,7 @@ fun PublicationItens() {
 
         )
 
-        val formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy HH:mm:ss")
+        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
         val current = LocalDateTime.now().format(formatter)
 
 

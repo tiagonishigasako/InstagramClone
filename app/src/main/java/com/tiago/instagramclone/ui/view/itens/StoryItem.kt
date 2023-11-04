@@ -1,5 +1,6 @@
 package com.tiago.instagramclone.ui.view.itens
 
+import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
@@ -29,10 +30,16 @@ import com.tiago.instagramclone.ui.theme.spacingSmall
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
-fun StoryItem(story: Story) {
+fun StoryItem(position: Int,
+              storyList: List<Story>,
+              contex: Context) {
+
+    val storiesNickname = storyList[position].userNickname
+    val storiesAvatar = storyList[position].userAvatar
 
     val avatarContentDesc =
-        stringResource(id = R.string.content_description_story, story.userNickname)
+        stringResource(id = R.string.content_description_story, storiesNickname)
+
 
     Column(
         modifier = Modifier
@@ -40,7 +47,7 @@ fun StoryItem(story: Story) {
             .background(MaterialTheme.colorScheme.background)
     ) {
         GlideImage(
-            model = story.userAvatar,
+            model = storiesAvatar,
             contentDescription = avatarContentDesc,
             modifier = Modifier
                 .size(64.dp)
@@ -52,7 +59,7 @@ fun StoryItem(story: Story) {
         )
 
         Text(
-            text = story.userNickname,
+            text = storiesNickname,
             modifier = Modifier.size(width = 72.dp, height = 24.dp),
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
@@ -62,8 +69,8 @@ fun StoryItem(story: Story) {
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun StoryItenPreview() {
-    StoryItem(story =  stories[0])
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun StoryItenPreview() {
+//    StoryItem(story =  stories[0])
+//}

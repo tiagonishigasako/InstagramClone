@@ -31,11 +31,10 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import androidx.navigation.navArgument
 import com.tiago.instagramclone.R
 import com.tiago.instagramclone.data.model.Feed
 import com.tiago.instagramclone.data.model.Story
-import com.tiago.instagramclone.data.repository.FeedRepository
+import com.tiago.instagramclone.data.repository.DataRepository
 import com.tiago.instagramclone.data.repository.stories
 import com.tiago.instagramclone.ui.theme.spacingMedium
 import com.tiago.instagramclone.ui.view.itens.FeedItem
@@ -123,6 +122,8 @@ fun HomeScreen(
                     item { InstagramToolBar() }
 
 
+
+
                     item { StoryList(stories = stories, navController = navController) }
 
 
@@ -162,8 +163,8 @@ fun HomeScreen(
 
 @Composable
 fun funUpdate(): MutableList<Feed> {
-    val feedRepository = FeedRepository()
-    return feedRepository.recuperarFeed().collectAsState(mutableListOf()).value
+    val dataRepository = DataRepository()
+    return dataRepository.recuperarFeed().collectAsState(mutableListOf()).value
 }
 
 
