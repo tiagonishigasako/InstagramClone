@@ -63,7 +63,8 @@ fun FeedItem(
     position: Int,
     feedList: MutableList<Feed>,
     context: Context,
-    navController: NavController) {
+    navController: NavController
+) {
 
     val nicknameFeed = feedList[position].userNickname
     val avatarFeed = feedList[position].userAvatar
@@ -125,7 +126,7 @@ fun FeedItem(
             )
 
 
-           Box(modifier = Modifier) {
+            Box(modifier = Modifier) {
                 Column {
                     Text(
                         text = nicknameFeed,
@@ -150,33 +151,28 @@ fun FeedItem(
                 }
 
 
-                Box(modifier = Modifier.align(Alignment.BottomEnd)){
+                Box(modifier = Modifier.align(Alignment.BottomEnd)) {
                     FeedIcon(icon = deletIcon, contentDescription = "", color = iconsColor) {
                         val alertDialog = AlertDialog.Builder(context)
                         alertDialog.setTitle("Deletar Feed")
                             .setMessage("Deseja excluir o feed?.")
-                            .setPositiveButton("Sim"){_,_ ->
+                            .setPositiveButton("Sim") { _, _ ->
                                 dataRepository.deletarFeed(agoFeed)
 
-                                scope.launch(Dispatchers.Main){
+                                scope.launch(Dispatchers.Main) {
                                     feedList.removeAt(position)
                                     navController.navigate("homeScreen")
 
                                 }
 
                             }
-                            .setNegativeButton("Não"){_,_ ->
+                            .setNegativeButton("Não") { _, _ ->
 
                             }.show()
 
                     }
                 }
             }
-
-
-
-
-
 
 
         }
@@ -210,8 +206,8 @@ fun FeedItem(
             FeedIcon(
                 icon = commentIcon, contentDescription = commentContentDesc, color = iconsColor
             ) {
-               Toast.makeText(context, commentToastText, duration)
-                   .show()
+                Toast.makeText(context, commentToastText, duration)
+                    .show()
 
             }
 
