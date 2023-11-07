@@ -36,6 +36,9 @@ class DataRepository {
         return  dataSource.recuperarStory()
     }
 
+    fun deletarFeed(postedAgo: String){
+        dataSource.deletarFeed(postedAgo)
+    }
 
 
 

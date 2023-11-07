@@ -86,10 +86,10 @@ fun PublicationToolBar(navController: NavController) {
                 modifier = Modifier
                     .clickable(
                         onClick = {
-                            var mensagem = true
+                            var mesagem = true
                             scope.launch(Dispatchers.IO) {
                                 if (nickName.isEmpty() && avatar.isEmpty() && image.isEmpty()) {
-                                    mensagem = false
+                                    mesagem = false
                                 } else {
                                     dataRepository.salvarFeed(
                                         userNickname = com.tiago.instagramclone.data.model.nickName,
@@ -99,11 +99,11 @@ fun PublicationToolBar(navController: NavController) {
                                         description = com.tiago.instagramclone.data.model.description,
                                         postedAgo = com.tiago.instagramclone.data.model.ago
                                     )
-                                    mensagem = true
+                                    mesagem = true
                                 }
                             }
                             scope.launch(Dispatchers.Main) {
-                                if (mensagem) {
+                                if (mesagem) {
                                     Toast.makeText(
                                         contex,
                                         "Post salvo com sucesso.",

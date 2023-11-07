@@ -1,8 +1,11 @@
 package com.tiago.instagramclone.ui.view.itens
 
 import android.content.Context
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -14,12 +17,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.tiago.instagramclone.R
@@ -30,9 +36,11 @@ import com.tiago.instagramclone.ui.theme.spacingSmall
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
-fun StoryItem(position: Int,
-              storyList: List<Story>,
-              contex: Context) {
+fun StoryItem(
+    position: Int,
+    storyList: List<Story>,
+    contex: Context,
+    navController: NavController) {
 
     val storiesNickname = storyList[position].userNickname
     val storiesAvatar = storyList[position].userAvatar
@@ -41,22 +49,45 @@ fun StoryItem(position: Int,
         stringResource(id = R.string.content_description_story, storiesNickname)
 
 
+
     Column(
         modifier = Modifier
             .padding(spacingSmall)
             .background(MaterialTheme.colorScheme.background)
     ) {
-        GlideImage(
-            model = storiesAvatar,
-            contentDescription = avatarContentDesc,
-            modifier = Modifier
-                .size(64.dp)
-                .align(Alignment.CenterHorizontally)
-                .fillMaxSize()
-                .clip(CircleShape)
-                .border(2.dp, StoryCircleColor, CircleShape),
-            contentScale = ContentScale.Crop
-        )
+        Box(modifier = Modifier){
+            GlideImage(
+                model = storiesAvatar,
+                contentDescription = avatarContentDesc,
+                modifier = Modifier
+                    .size(64.dp)
+//                    .align(Alignment.CenterHorizontally)
+                    .fillMaxSize()
+                    .clip(CircleShape)
+                    .border(2.dp, StoryCircleColor, CircleShape),
+                contentScale = ContentScale.Crop
+            )
+            if (position == 0) {
+                Image(
+                    painter = painterResource(id = R.drawable.ic_add_story),
+                    contentDescription = "",
+                    modifier = Modifier
+                        //.padding(bottom = 25.dp, end = 10.dp)
+                        .align(Alignment.BottomEnd)
+                        .background(
+                            shape = CircleShape,
+                            color = MaterialTheme.colorScheme.background
+                        )
+                        .clip(CircleShape)
+                        .border(3.dp, Color.Black, CircleShape)
+                        .clickable(onClick = {
+                            navController.navigate("storyPublication")
+                        }),
+                    contentScale = ContentScale.Crop
+                )
+
+            }
+        }
 
         Text(
             text = storiesNickname,
@@ -66,6 +97,7 @@ fun StoryItem(position: Int,
             textAlign = TextAlign.Center
 
         )
+
     }
 }
 

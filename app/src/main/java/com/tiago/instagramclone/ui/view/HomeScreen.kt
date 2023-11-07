@@ -1,11 +1,13 @@
 package com.tiago.instagramclone.ui.view
 
 import android.annotation.SuppressLint
+import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -31,11 +33,11 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.google.firestore.admin.v1.Index
 import com.tiago.instagramclone.R
 import com.tiago.instagramclone.data.model.Feed
 import com.tiago.instagramclone.data.model.Story
 import com.tiago.instagramclone.data.repository.DataRepository
-import com.tiago.instagramclone.data.repository.stories
 import com.tiago.instagramclone.ui.theme.spacingMedium
 import com.tiago.instagramclone.ui.view.itens.FeedItem
 import com.tiago.instagramclone.ui.view.itens.StoryItem
@@ -56,7 +58,9 @@ fun HomeScreen(
 
 
     val context = LocalContext.current
-    var updateList = remember { mutableListOf<Feed>() }
+    var updateListFeed = remember { mutableListOf<Feed>() }
+    var updateListStory = remember { mutableListOf<Story>() }
+
     var isCliked by mutableStateOf(false)
 
 
@@ -83,11 +87,13 @@ fun HomeScreen(
     ) {
 
 
-        if (updateList.isEmpty()) {
-            updateList = funUpdate()
+        if (updateListFeed.isEmpty()) {
+            updateListFeed = updateFeed()
+            updateListStory = updateStory()
             isCliked = false
         } else if (isCliked) {
-            updateList = funUpdate()
+            updateListFeed = updateFeed()
+            updateListStory = updateStory()
             isCliked = false
         }
         val isRefreshing by remember {
@@ -121,10 +127,14 @@ fun HomeScreen(
 
                     item { InstagramToolBar() }
 
+                    item {
+                        StoryList(
+                            updateListStory = updateListStory,
+                            navController = navController,
+                            context = context
+                        )
+                    }
 
-
-
-                    item { StoryList(stories = stories, navController = navController) }
 
 
                     item {
@@ -134,14 +144,18 @@ fun HomeScreen(
                         )
                     }
 
-                    itemsIndexed(updateList) { position, _ ->
+                    itemsIndexed(updateListFeed) { position, _ ->
 
                         FeedItem(
                             position = position,
-                            feedList = updateList.reversed(),
-                            context = context
+                            feedList = updateListFeed.asReversed(),
+                            context = context,
+                            navController = navController
                         )
 
+                    }
+                    item {
+                        Spacer(modifier = modifier.padding(top = 80.dp))
                     }
 
                 }
@@ -162,46 +176,35 @@ fun HomeScreen(
 
 
 @Composable
-fun funUpdate(): MutableList<Feed> {
+fun updateFeed(): MutableList<Feed> {
     val dataRepository = DataRepository()
     return dataRepository.recuperarFeed().collectAsState(mutableListOf()).value
 }
 
+@Composable
+fun updateStory(): MutableList<Story> {
+    val dataRepository = DataRepository()
+    return dataRepository.recuperarStory().collectAsState(mutableListOf()).value
+}
+
 
 @Composable
-fun StoryList(stories: List<Story>, navController: NavController) {
+fun StoryList(updateListStory: List<Story>, navController: NavController, context: Context) {
     LazyRow(modifier = Modifier.padding(top = spacingMedium)) {
-        item {
+        itemsIndexed(updateListStory) { position, _ ->
             Box {
-                StoryItem(story = stories[0])
 
-                Image(
-                    painter = painterResource(id = R.drawable.ic_add_story),
-                    contentDescription = "",
-                    modifier = Modifier
-                        .padding(bottom = 25.dp, end = 10.dp)
-                        .align(Alignment.BottomEnd)
-                        .background(
-                            shape = CircleShape,
-                            color = MaterialTheme.colorScheme.background
-                        )
-                        .clip(CircleShape)
-                        .border(3.dp, Color.Black, CircleShape)
-                        .clickable(onClick = {
-                            navController.navigate("storyPublication")
-                        }),
-                    contentScale = ContentScale.Crop
+                StoryItem(
+                    position = position,
+                    storyList = updateListStory.reversed(),
+                    contex = context,
+                    navController = navController
                 )
+
 
             }
         }
-
-        itemsIndexed(stories) { _, item ->
-
-            StoryItem(story = item)
-        }
     }
-
 }
 
 

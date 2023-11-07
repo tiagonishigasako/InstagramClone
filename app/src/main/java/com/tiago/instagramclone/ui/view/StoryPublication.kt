@@ -97,7 +97,7 @@ fun StoryPublication(
                     modifier = Modifier
                         .padding(spacingSmall)
                         .clickable(onClick = {
-                            var message = false
+                            var message = true
                             scope.launch(Dispatchers.IO) {
                                 if (userNickname.isEmpty() && urlUserAvatar.isEmpty()) {
                                     message = false

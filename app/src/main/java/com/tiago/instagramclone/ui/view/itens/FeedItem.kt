@@ -1,12 +1,14 @@
 package com.tiago.instagramclone.ui.view.itens
 
 
+import android.app.AlertDialog
 import android.content.Context
 import android.widget.Toast
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -21,6 +23,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -39,23 +42,28 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.tiago.instagramclone.R
 import com.tiago.instagramclone.data.model.Feed
+import com.tiago.instagramclone.data.repository.DataRepository
 import com.tiago.instagramclone.ui.theme.Gray
 import com.tiago.instagramclone.ui.theme.LikedColor
 import com.tiago.instagramclone.ui.theme.spacingLarge
 import com.tiago.instagramclone.ui.theme.spacingMedium
 import com.tiago.instagramclone.ui.theme.spacingSmall
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun FeedItem(
     position: Int,
-    feedList: List<Feed>,
-    context: Context) {
+    feedList: MutableList<Feed>,
+    context: Context,
+    navController: NavController) {
 
     val nicknameFeed = feedList[position].userNickname
     val avatarFeed = feedList[position].userAvatar
@@ -70,6 +78,7 @@ fun FeedItem(
     val messageIcon = R.drawable.ic_message2
     val commentIcon = R.drawable.ic_comment
     val bookmarkIcon = R.drawable.ic_bookmark
+    val deletIcon = R.drawable.ic_delete
 
 
     val userAvatarContentDesc = stringResource(R.string.content_description_feed_avatar)
@@ -92,6 +101,9 @@ fun FeedItem(
     val context = LocalContext.current
     val duration = Toast.LENGTH_LONG
 
+    val dataRepository = DataRepository()
+    val scope = rememberCoroutineScope()
+
 
 
 
@@ -112,30 +124,63 @@ fun FeedItem(
                 contentScale = ContentScale.Crop
             )
 
-            Column {
-                Text(
-                    text = nicknameFeed,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(start = spacingMedium),
-                    fontWeight = FontWeight.Bold,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                )
 
-                Text(
-                    text = localFeed,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(start = spacingMedium),
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                    textAlign = TextAlign.Start
-                )
+           Box(modifier = Modifier) {
+                Column {
+                    Text(
+                        text = nicknameFeed,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(start = spacingMedium),
+                        fontWeight = FontWeight.Bold,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                    )
+
+                    Text(
+                        text = localFeed,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(start = spacingMedium),
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        textAlign = TextAlign.Start
+                    )
+
+                }
+
+
+                Box(modifier = Modifier.align(Alignment.BottomEnd)){
+                    FeedIcon(icon = deletIcon, contentDescription = "", color = iconsColor) {
+                        val alertDialog = AlertDialog.Builder(context)
+                        alertDialog.setTitle("Deletar Feed")
+                            .setMessage("Deseja excluir o feed?.")
+                            .setPositiveButton("Sim"){_,_ ->
+                                dataRepository.deletarFeed(agoFeed)
+
+                                scope.launch(Dispatchers.Main){
+                                    feedList.removeAt(position)
+                                    navController.navigate("homeScreen")
+
+                                }
+
+                            }
+                            .setNegativeButton("Não"){_,_ ->
+
+                            }.show()
+
+                    }
+                }
             }
 
 
+
+
+
+
+
         }
+
 
         GlideImage(
             model = imageFeed,
@@ -187,7 +232,8 @@ fun FeedItem(
                     .weight(1f)
                     .wrapContentWidth(align = Alignment.End)
                     .clickable {
-                        Toast.makeText(context, bookmarkToastText, duration)
+                        Toast
+                            .makeText(context, bookmarkToastText, duration)
                             .show()
                     },
                 colorFilter = ColorFilter.tint(iconsColor)

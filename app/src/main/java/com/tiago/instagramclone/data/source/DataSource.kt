@@ -96,6 +96,14 @@ class DataSource {
 
     }
 
+    fun deletarFeed(postedAgo: String){
+        db.collection("feedList").document(postedAgo).delete().addOnCompleteListener {
+
+        }.addOnCompleteListener {
+
+        }
+    }
+
 
 
 }
