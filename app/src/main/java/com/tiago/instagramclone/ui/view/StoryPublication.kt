@@ -81,7 +81,7 @@ fun StoryPublication(
 
                     )
                 Text(
-                    text = "aaaa",
+                    text = "Publicar Story",
                     modifier = Modifier
                         .padding(top = spacingSmall)
                         .weight(1f),

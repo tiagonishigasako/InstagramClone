@@ -11,6 +11,7 @@ import androidx.navigation.compose.rememberNavController
 import com.tiago.instagramclone.ui.theme.InstagramCloneTheme
 import com.tiago.instagramclone.ui.view.HomeScreen
 import com.tiago.instagramclone.ui.view.FeedPublication
+import com.tiago.instagramclone.ui.view.LoginScreen
 import com.tiago.instagramclone.ui.view.StoryPublication
 
 class MainActivity : ComponentActivity() {
@@ -24,7 +25,7 @@ class MainActivity : ComponentActivity() {
 
                 val navController = rememberNavController()
 
-                NavHost(navController = navController, startDestination = "homeScreen"){
+                NavHost(navController = navController, startDestination = "loginScreen"){
                     composable(
                         route = "homeScreen"
                     ){
@@ -41,6 +42,12 @@ class MainActivity : ComponentActivity() {
                         route = "storyPublication"
                     ){
                         StoryPublication(navController)
+                    }
+
+                    composable(
+                        route = "loginScreen"
+                    ){
+                        LoginScreen(navController)
                     }
 
 

@@ -13,4 +13,6 @@
     <string name="button_message_toast_text">Clicked send the post.</string>
     <string name="button_comment_toast_text">Clicked to commend on the post.</string>
     <string name="button_bookmark_toast_text">Clicked to bookmark the post.</string>
+    <string name="phone_number_username_or_email_address">Phone number, username or email address.</string>
+    <string name="password">Password</string>
 </resources>

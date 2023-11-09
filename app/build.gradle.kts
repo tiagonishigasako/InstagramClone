@@ -83,6 +83,9 @@ dependencies {
 
     implementation("eu.bambooapps:compose-material3-pullrefresh:1.0.0")
 
+    //material icon
+    implementation ("androidx.compose.material:material-icons-extended:1.5.4")
+
 
 
 

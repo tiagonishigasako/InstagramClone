@@ -53,7 +53,7 @@ import eu.bambooapps.material3.pullrefresh.rememberPullRefreshState
 @Composable
 fun HomeScreen(
     navController: NavController,
-    modifier: Modifier = Modifier.background(MaterialTheme.colorScheme.background)
+    modifier: Modifier = Modifier
 ) {
 
 
