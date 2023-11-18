@@ -40,6 +40,14 @@ class DataRepository {
         dataSource.deletarFeed(postedAgo)
     }
 
+    fun criarCadastro(email: String,senha: String){
+        dataSource.criarCadastro(email,senha)
+    }
+
+    fun authCadastro(email: String, senha: String){
+        dataSource.authCadastro(email, senha)
+    }
+
 
 
 

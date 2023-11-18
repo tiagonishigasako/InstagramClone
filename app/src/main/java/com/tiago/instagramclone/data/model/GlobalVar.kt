@@ -10,3 +10,4 @@ import android.net.Uri
     var image: String = ""
     var description: String= ""
     var ago: String= ""
+    var autenticado: Boolean = false

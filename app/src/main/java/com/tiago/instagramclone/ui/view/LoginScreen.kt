@@ -45,11 +45,14 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.tiago.instagramclone.R
+import com.tiago.instagramclone.data.model.autenticado
+import com.tiago.instagramclone.data.repository.DataRepository
 import com.tiago.instagramclone.ui.theme.NextColor
 import com.tiago.instagramclone.ui.theme.spacingLarge
 import com.tiago.instagramclone.ui.theme.spacingMedium
 import com.tiago.instagramclone.ui.theme.spacingXLarge
 import com.tiago.instagramclone.ui.view.toolsBar.CreateAccToolBar
+
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
@@ -61,11 +64,15 @@ fun LoginScreen(navController: NavController) {
 
     var userLogin by remember { mutableStateOf("") }
     var userPassword by remember { mutableStateOf("") }
+    val dataRepository = DataRepository()
+
 
 
     var showPassword by remember {
         mutableStateOf(false)
     }
+
+
 
     Scaffold(
         modifier = Modifier.background(MaterialTheme.colorScheme.background),
@@ -161,7 +168,20 @@ fun LoginScreen(navController: NavController) {
                 )
 
                 Button(
-                    onClick = { navController.navigate("homeScreen") },
+                    onClick = {
+                        if (userLogin.isNotEmpty() && userPassword.isNotEmpty()) {
+                            dataRepository.authCadastro(email = userLogin, senha = userPassword)
+                            if (autenticado) {
+                                navController.navigate("homeScreen")
+                            } else {
+
+                            }
+
+
+                        } else {
+
+                        }
+                    },
                     modifier = Modifier
                         .fillMaxWidth(),
 
