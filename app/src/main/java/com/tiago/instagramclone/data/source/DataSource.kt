@@ -1,13 +1,12 @@
 package com.tiago.instagramclone.data.source
 
-import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
+import androidx.compose.runtime.MutableState
+import androidx.navigation.NavController
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ktx.toObject
 import com.tiago.instagramclone.data.model.Feed
 import com.tiago.instagramclone.data.model.Story
-import com.tiago.instagramclone.data.model.autenticado
+import com.tiago.instagramclone.data.model.authenticated
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -19,6 +18,8 @@ class DataSource {
     private val _todosStory = MutableStateFlow<MutableList<Story>>(mutableListOf())
     private val todosStory: StateFlow<MutableList<Story>> = _todosStory
     private val auth = FirebaseAuth.getInstance()
+    private var message = false
+
 
 
     fun salvarFeed(
@@ -115,13 +116,25 @@ class DataSource {
         }
     }
 
-    fun authCadastro(email: String, senha: String){
+    fun authCadastro(email: String, senha: String, navController: NavController): Boolean {
+        var _message = false
+
         auth.signInWithEmailAndPassword(email, senha).addOnCompleteListener {  autenticacao ->
-            if(autenticacao.isSuccessful){
-                autenticado = true
+            if(!autenticacao.isSuccessful){
+
+                _message = false
+            } else {
+                _message = true
+                navController.navigate("homeScreen")
+
             }
 
         }
+        message = _message
+
+        return message
+
+
     }
 
 

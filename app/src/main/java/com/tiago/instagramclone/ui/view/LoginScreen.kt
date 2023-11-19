@@ -1,6 +1,7 @@
 package com.tiago.instagramclone.ui.view
 
 import android.annotation.SuppressLint
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -29,10 +30,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
@@ -45,22 +48,26 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.tiago.instagramclone.R
-import com.tiago.instagramclone.data.model.autenticado
 import com.tiago.instagramclone.data.repository.DataRepository
 import com.tiago.instagramclone.ui.theme.NextColor
 import com.tiago.instagramclone.ui.theme.spacingLarge
 import com.tiago.instagramclone.ui.theme.spacingMedium
 import com.tiago.instagramclone.ui.theme.spacingXLarge
 import com.tiago.instagramclone.ui.view.toolsBar.CreateAccToolBar
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter", "ShowToast")
 @Composable
 fun LoginScreen(navController: NavController) {
 
     val instagramLabel = stringResource(id = R.string.instagram)
     val loginText = stringResource(R.string.phone_number_username_or_email_address)
     val passwordText = stringResource(R.string.password)
+    val scope = rememberCoroutineScope()
+    val contex = LocalContext.current
 
     var userLogin by remember { mutableStateOf("") }
     var userPassword by remember { mutableStateOf("") }
@@ -169,16 +176,36 @@ fun LoginScreen(navController: NavController) {
 
                 Button(
                     onClick = {
-                        if (userLogin.isNotEmpty() && userPassword.isNotEmpty()) {
-                            dataRepository.authCadastro(email = userLogin, senha = userPassword)
-                            if (autenticado) {
-                                navController.navigate("homeScreen")
+
+                        var message = false
+                        scope.launch(Dispatchers.IO) {
+                            if (userLogin.isEmpty() && userPassword.isEmpty()) {
+                                message = false
                             } else {
+                                message = Autenticacao(
+                                    userLogin = userLogin,
+                                    userPassword = userPassword,
+                                    navController = navController
+                                )
 
                             }
 
+                        }
 
-                        } else {
+                        scope.launch (Dispatchers.Main){
+                            withContext(Dispatchers.IO) {
+                                Thread.sleep(2000)
+                            }
+
+                            if (message){
+                                Toast
+                                    .makeText(contex, "Login feito com Sucesso!", Toast.LENGTH_SHORT
+
+                                    ).show()
+                            } else {
+                                Toast
+                                    .makeText(contex, "Email ou senha invalido", Toast.LENGTH_SHORT).show()
+                            }
 
                         }
                     },
@@ -189,6 +216,7 @@ fun LoginScreen(navController: NavController) {
                     shape = RoundedCornerShape(10.dp)
                 ) {
                     Text(text = "Log In")
+
                 }
 
                 Row {
@@ -249,6 +277,13 @@ fun LoginScreen(navController: NavController) {
         }
 
     }
+
+}
+
+
+fun Autenticacao(userLogin: String, userPassword: String, navController: NavController): Boolean {
+    val dataRepository = DataRepository()
+    return dataRepository.authCadastro(email = userLogin, senha = userPassword, navController = navController)
 
 }
 

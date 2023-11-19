@@ -1,9 +1,11 @@
 package com.tiago.instagramclone.data.repository
 
+import androidx.navigation.NavController
 import com.tiago.instagramclone.data.model.Feed
 import com.tiago.instagramclone.data.model.Story
 import com.tiago.instagramclone.data.source.DataSource
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.StateFlow
 
 class DataRepository {
 
@@ -44,8 +46,8 @@ class DataRepository {
         dataSource.criarCadastro(email,senha)
     }
 
-    fun authCadastro(email: String, senha: String){
-        dataSource.authCadastro(email, senha)
+    fun authCadastro(email: String, senha: String, navController: NavController):Boolean {
+       return dataSource.authCadastro(email, senha, navController)
     }
 
 
