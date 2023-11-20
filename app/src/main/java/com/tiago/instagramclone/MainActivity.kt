@@ -9,6 +9,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.tiago.instagramclone.ui.theme.InstagramCloneTheme
+import com.tiago.instagramclone.ui.view.CreateAccScreen
 import com.tiago.instagramclone.ui.view.HomeScreen
 import com.tiago.instagramclone.ui.view.FeedPublication
 import com.tiago.instagramclone.ui.view.LoginScreen
@@ -48,6 +49,12 @@ class MainActivity : ComponentActivity() {
                         route = "loginScreen"
                     ){
                         LoginScreen(navController)
+                    }
+
+                    composable(
+                        route = "createAccScreen"
+                    ){
+                        CreateAccScreen(navController)
                     }
 
 

@@ -71,8 +71,6 @@ fun LoginScreen(navController: NavController) {
 
     var userLogin by remember { mutableStateOf("") }
     var userPassword by remember { mutableStateOf("") }
-    val dataRepository = DataRepository()
-
 
 
     var showPassword by remember {
@@ -182,29 +180,34 @@ fun LoginScreen(navController: NavController) {
                             if (userLogin.isEmpty() && userPassword.isEmpty()) {
                                 message = false
                             } else {
-                                message = Autenticacao(
+                                val _message = Autenticacao(
                                     userLogin = userLogin,
                                     userPassword = userPassword,
                                     navController = navController
                                 )
 
+                                message = _message
+
+
                             }
 
                         }
 
-                        scope.launch (Dispatchers.Main){
+                        scope.launch(Dispatchers.Main) {
                             withContext(Dispatchers.IO) {
-                                Thread.sleep(2000)
+                                Thread.sleep(3000)
                             }
 
-                            if (message){
+                            if (message) {
                                 Toast
-                                    .makeText(contex, "Login feito com Sucesso!", Toast.LENGTH_SHORT
+                                    .makeText(
+                                        contex, "Login feito com Sucesso!", Toast.LENGTH_SHORT
 
                                     ).show()
                             } else {
                                 Toast
-                                    .makeText(contex, "Email ou senha invalido", Toast.LENGTH_SHORT).show()
+                                    .makeText(contex, "Email ou senha invalido", Toast.LENGTH_SHORT)
+                                    .show()
                             }
 
                         }
@@ -283,7 +286,11 @@ fun LoginScreen(navController: NavController) {
 
 fun Autenticacao(userLogin: String, userPassword: String, navController: NavController): Boolean {
     val dataRepository = DataRepository()
-    return dataRepository.authCadastro(email = userLogin, senha = userPassword, navController = navController)
+    return dataRepository.authCadastro(
+        email = userLogin,
+        senha = userPassword,
+        navController = navController
+    )
 
 }
 

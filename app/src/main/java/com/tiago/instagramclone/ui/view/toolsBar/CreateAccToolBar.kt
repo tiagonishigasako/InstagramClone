@@ -47,7 +47,8 @@ fun CreateAccToolBar(navController: NavController) {
                 Spacer(modifier = Modifier.padding(spacingMedium))
 
                 Row(
-                    modifier = Modifier,
+                    modifier = Modifier
+                        .fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center
                 ) {
@@ -64,7 +65,7 @@ fun CreateAccToolBar(navController: NavController) {
                         text = "Sign Up",
                         modifier = Modifier
                             .weight(0.3f)
-                            .clickable { },
+                            .clickable {navController.navigate("createAccScreen") },
                         color = NextColor,
                         fontWeight = FontWeight.Bold
                     )
