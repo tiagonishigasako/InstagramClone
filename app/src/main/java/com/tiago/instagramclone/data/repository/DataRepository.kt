@@ -55,16 +55,14 @@ class DataRepository {
         userEmail: String,
         userAvatar: String,
         userNickname: String,
-        master:Boolean
-    ){
+        master: Boolean
+    ) {
         dataSource.cadastroInfoUser(userEmail, userAvatar, userNickname, master)
     }
 
-    fun loadInfoUser(userEmail: String): Flow<MutableList<UserAuth>>{
+    fun loadInfoUser(userEmail: String): Flow<MutableList<UserAuth>> {
         return dataSource.loadInfoUser(userEmail = userEmail)
     }
-
-
 
 
 }

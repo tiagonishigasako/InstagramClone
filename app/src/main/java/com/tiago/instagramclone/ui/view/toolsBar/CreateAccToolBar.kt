@@ -65,7 +65,7 @@ fun CreateAccToolBar(navController: NavController) {
                         text = "Sign Up",
                         modifier = Modifier
                             .weight(0.3f)
-                            .clickable {navController.navigate("createAccScreen") },
+                            .clickable { navController.navigate("createAccScreen") },
                         color = NextColor,
                         fontWeight = FontWeight.Bold
                     )

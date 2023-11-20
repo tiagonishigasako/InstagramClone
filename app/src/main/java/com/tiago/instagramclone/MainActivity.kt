@@ -26,43 +26,39 @@ class MainActivity : ComponentActivity() {
 
                 val navController = rememberNavController()
 
-                NavHost(navController = navController, startDestination = "loginScreen"){
+                NavHost(navController = navController, startDestination = "loginScreen") {
                     composable(
                         route = "homeScreen"
-                    ){
+                    ) {
                         HomeScreen(navController)
                     }
 
                     composable(
                         route = "feedPublication"
-                    ){
+                    ) {
                         FeedPublication(navController)
                     }
 
                     composable(
                         route = "storyPublication"
-                    ){
+                    ) {
                         StoryPublication(navController)
                     }
 
                     composable(
                         route = "loginScreen"
-                    ){
+                    ) {
                         LoginScreen(navController)
                     }
 
                     composable(
                         route = "createAccScreen"
-                    ){
+                    ) {
                         CreateAccScreen(navController)
                     }
 
 
                 }
-
-
-
-
 
 
             }

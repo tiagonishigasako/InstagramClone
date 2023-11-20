@@ -132,7 +132,8 @@ class DataSource {
         userEmail: String,
         userAvatar: String,
         userNickname: String,
-        master: Boolean){
+        master: Boolean
+    ) {
         val userMap = hashMapOf(
             "userEmail" to userEmail,
             "userAvatar" to userAvatar,
@@ -148,14 +149,14 @@ class DataSource {
 
     }
 
-    fun loadInfoUser(userEmail: String): Flow<MutableList<UserAuth>>{
+    fun loadInfoUser(userEmail: String): Flow<MutableList<UserAuth>> {
         val userInfoFire: MutableList<UserAuth> = mutableListOf()
 
         db.collection("usuarios")
             .whereArrayContains("userEmail", userEmail)
             .get()
-            .addOnCompleteListener { querySnapshot  ->
-                for(document  in querySnapshot.result ){
+            .addOnCompleteListener { querySnapshot ->
+                for (document in querySnapshot.result) {
                     val user = document.toObject(UserAuth::class.java)
                     userInfoFire.add(user)
 
@@ -163,7 +164,7 @@ class DataSource {
 
                 }
 
-        }
+            }
         return userInfo
     }
 

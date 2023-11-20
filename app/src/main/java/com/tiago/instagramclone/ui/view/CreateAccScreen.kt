@@ -35,12 +35,12 @@ import com.tiago.instagramclone.ui.theme.spacingSmall
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun CreateAccScreen(navController: NavController){
+fun CreateAccScreen(navController: NavController) {
 
     val instagramLabel = stringResource(id = R.string.instagram)
 
     var userEmail by remember { mutableStateOf("") }
-    var userNickname by remember { mutableStateOf("")}
+    var userNickname by remember { mutableStateOf("") }
     var userAvatar by remember { mutableStateOf("") }
 
 
@@ -51,45 +51,49 @@ fun CreateAccScreen(navController: NavController){
         Box(
             modifier = Modifier
                 .fillMaxSize()
-        ){
-            Column( modifier = Modifier
-                .padding(spacingLarge)
-                .fillMaxWidth(),
+        ) {
+            Column(
+                modifier = Modifier
+                    .padding(spacingLarge)
+                    .fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally
 
             ) {
                 Spacer(modifier = Modifier.padding(bottom = 90.dp))
 
-                Text(text = instagramLabel,
+                Text(
+                    text = instagramLabel,
                     modifier = Modifier,
                     style = MaterialTheme.typography.headlineLarge,
                     fontSize = 45.sp,
                 )
 
-                Text(text = "Sing up to see photos and videos from your friends.",
+                Text(
+                    text = "Sing up to see photos and videos from your friends.",
                     color = Color.Gray,
                     style = MaterialTheme.typography.bodyLarge,
                     textAlign = TextAlign.Center,
-                    fontSize = 18.sp)
+                    fontSize = 18.sp
+                )
 
                 Spacer(modifier = Modifier.padding(spacingSmall))
 
                 OutlinedTextField(
                     value = userEmail,
-                    onValueChange = {userEmail = it },
-                    label = { Text(text = "Email address.")},
+                    onValueChange = { userEmail = it },
+                    label = { Text(text = "Email address.") },
                     textStyle = MaterialTheme.typography.bodyLarge,
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(start = spacingLarge, end = spacingLarge),
                     singleLine = true,
                     maxLines = 1
-                    )
+                )
 
                 OutlinedTextField(
                     value = userNickname,
-                    onValueChange = {userNickname = it },
-                    label = { Text(text = "Nickname.")},
+                    onValueChange = { userNickname = it },
+                    label = { Text(text = "Nickname.") },
                     textStyle = MaterialTheme.typography.bodyLarge,
                     modifier = Modifier
                         .fillMaxWidth()
@@ -100,8 +104,8 @@ fun CreateAccScreen(navController: NavController){
 
                 OutlinedTextField(
                     value = userAvatar,
-                    onValueChange = {userAvatar = it },
-                    label = { Text(text = "Avatar address (only URL).")},
+                    onValueChange = { userAvatar = it },
+                    label = { Text(text = "Avatar address (only URL).") },
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(start = spacingLarge, end = spacingLarge),
@@ -112,7 +116,8 @@ fun CreateAccScreen(navController: NavController){
 
                 Spacer(modifier = Modifier.padding(bottom = spacingLarge))
 
-                Button(onClick = { navController.popBackStack() },
+                Button(
+                    onClick = { navController.popBackStack() },
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(start = spacingLarge, end = spacingLarge),
